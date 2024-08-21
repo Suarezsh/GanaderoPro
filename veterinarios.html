@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Veterinarios - GanaderoPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        #searchInput {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .card {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card .profile-icon {
+            font-size: 50px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .card h5 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+
+        .card-container .card {
+            flex: 1 1 calc(30% - 20px);
+            max-width: calc(30% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .card-container .card {
+                flex: 1 1 calc(45% - 20px);
+                max-width: calc(45% - 20px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-container .card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="brand">
+            <a id="app-name" href="index.html">GanaderoPro</a>
+        </div>
+        <div id="menu-toggle-btn" class="menu-toggle">
+            <i id="menu-bars-icon" class="fas fa-bars"></i>
+            <i id="menu-times-icon" class="fas fa-times" style="display: none;"></i>
+        </div>
+        <ul id="main-menu" class="menu">
+            <li><a href="index.html" id="menu-item-home"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="dosis.html" id="menu-item-dosis"><i class="fas fa-syringe"></i> Medicación</a></li>
+            <li><a href="mis_animales.html" id="menu-item-animals"><i class="fas fa-paw"></i> Ganado</a></li>
+            <li><a href="tecnicos.html" id="menu-item-specialists"><i class="fas fa-tools"></i> Especialistas</a></li>
+            <li><a href="veterinarios.html" id="menu-item-veterinarians"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+            <li><a href="enfermedades.html" id="menu-item-diseases"><i class="fas fa-viruses"></i> Salud</a></li>
+            <li><a href="notas.html" id="menu-item-notes"><i class="fas fa-sticky-note"></i> Anotaciones</a></li>
+            <li><a href="ganaderia.html" id="menu-item-agriculture"><i class="fas fa-tractor"></i> Agricultura</a></li>
+        </ul>
+        <div id="overlay" class="overlay"></div>
+    </nav>
+
+    <div class="container">
+        <h2>Veterinarios</h2>
+        <input type="text" id="searchInput" placeholder="Buscar por nombre o dirección...">
+
+        <div class="card-container" id="veterinariansContainer">
+            <!-- Tarjetas de veterinarios se agregarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        const veterinarians = [
+            { name: 'Veterinaria El Buen Animal', address: 'Av. Los Olivos 123, Lima' },
+            { name: 'Clinica VetCare', address: 'Calle San Martín 456, Cusco' },
+            { name: 'Centro Veterinario Animalia', address: 'Av. La Paz 789, Arequipa' },
+            { name: 'Veterinaria Salud Animal', address: 'Calle Los Robles 321, Puno' },
+            { name: 'Vet Clinic Plus', address: 'Av. Central 654, Lima' },
+            { name: 'Veterinaria Los Andes', address: 'Calle Comercio 987, Cusco' },
+            { name: 'Clinica Veterinaria El Vet', address: 'Av. La Libertad 741, Huancayo' },
+            { name: 'Centro Veterinario Vida', address: 'Calle Los Árboles 852, Cajamarca' },
+            { name: 'Veterinaria Animal Health', address: 'Av. Arequipa 963, Piura' },
+            { name: 'Clinica VetCare Pro', address: 'Calle Unión 159, Trujillo' }
+        ];
+
+        function renderVeterinarians() {
+            const container = document.getElementById('veterinariansContainer');
+            container.innerHTML = '';
+
+            veterinarians.forEach(vet => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="profile-icon"><i class="fas fa-hospital"></i></div>
+                    <h5>${vet.name}</h5>
+                    <p>Dirección: ${vet.address}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const filteredVeterinarians = veterinarians.filter(vet => 
+                vet.name.toLowerCase().includes(query) ||
+                vet.address.toLowerCase().includes(query)
+            );
+            renderFilteredVeterinarians(filteredVeterinarians);
+        });
+
+        function renderFilteredVeterinarians(filteredVeterinarians) {
+            const container = document.getElementById('veterinariansContainer');
+            container.innerHTML = '';
+
+            filteredVeterinarians.forEach(vet => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="profile-icon"><i class="fas fa-hospital"></i></div>
+                    <h5>${vet.name}</h5>
+                    <p>Dirección: ${vet.address}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        renderVeterinarians();
+    </script>
+    <script src="menu.js"></script>
+</body>
+</html>

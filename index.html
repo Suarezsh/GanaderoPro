@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="menu.js"></script>
+    <title>GanaderoPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .carousel-item {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+
+        .carousel-item h5 {
+            margin: 20px 0;
+            color: #343a40;
+        }
+
+        .description-div {
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        .description-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .description-content {
+            display: block;
+            padding: 15px;
+            background-color: #f1f1f1;
+        }
+
+        .description-content a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            color: #007bff;
+            text-decoration: none;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+
+        .description-content a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer i {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: #f8f9fa;
+        }
+
+        footer .social-icons {
+            margin: 20px 0;
+        }
+
+        footer .social-icons a {
+            color: #f8f9fa;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="brand">
+            <a id="app-name" href="index.html">GanaderoPro</a>
+        </div>
+        <div id="menu-toggle-btn" class="menu-toggle">
+            <i id="menu-bars-icon" class="fas fa-bars"></i>
+            <i id="menu-times-icon" class="fas fa-times" style="display: none;"></i>
+        </div>
+        <ul id="main-menu" class="menu">
+            <li><a href="index.html" id="menu-item-home"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="dosis.html" id="menu-item-dosis"><i class="fas fa-syringe"></i> Medicación</a></li>
+            <li><a href="mis_animales.html" id="menu-item-animals"><i class="fas fa-paw"></i> Ganado</a></li>
+            <li><a href="tecnicos.html" id="menu-item-specialists"><i class="fas fa-tools"></i> Especialistas</a></li>
+            <li><a href="veterinarios.html" id="menu-item-veterinarians"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+            <li><a href="enfermedades.html" id="menu-item-diseases"><i class="fas fa-viruses"></i> Salud</a></li>
+            <li><a href="notas.html" id="menu-item-notes"><i class="fas fa-sticky-note"></i> Anotaciones</a></li>
+            <li><a href="ganaderia.html" id="menu-item-agriculture"><i class="fas fa-tractor"></i> Agricultura</a></li>
+        </ul>
+        <div id="overlay" class="overlay"></div>
+    </nav>
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <h5>Bienvenido a GanaderoPro</h5>
+                <p>Con nuestra aplicación podrás gestionar todos los aspectos de la ganadería, desde dosis de medicamentos hasta anotaciones importantes.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Medicaciones</h5>
+                <p>Registra y visualiza todas las dosis de medicamentos para tu ganado. Lleva un control completo de las medicaciones administradas.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Ganado</h5>
+                <p>Administra y visualiza todos los detalles de tu ganado. Lleva un registro detallado de cada animal.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Especialistas</h5>
+                <p>Encuentra especialistas para tu ganado y mantén su salud en óptimas condiciones.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Veterinarios</h5>
+                <p>Accede a una lista de tiendas veterinarias locales para todas tus necesidades veterinarias.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Salud</h5>
+                <p>Consulta listas de medicamentos y enfermedades. Busca por nombre de fármaco o síntomas para encontrar la información que necesitas.</p>
+            </div>
+            <div class="carousel-item">
+                <h5>Anotaciones</h5>
+                <p>Toma y guarda anotaciones importantes relacionadas con la gestión de tu ganado.</p>
+            </div>
+            <div class="carousel-item">
+                <h5> Agricultura</h5>
+                <p>Administra tus actividades agrícolas y mantén un registro detallado de las tareas realizadas.</p>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-dosis">
+                        <i class="fas fa-syringe"></i> Medicación
+                    </div>
+                    <div class="description-content">
+                        <p>Registra y visualiza todas las dosis de medicamentos administradas a tu ganado. Lleva un control detallado de cada dosis para asegurar la salud óptima de tus animales.</p>
+                        <a href="dosis.html">Ir a Medicación</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-animals">
+                        <i class="fas fa-paw"></i> Ganado
+                    </div>
+                    <div class="description-content">
+                        <p>Visualiza y administra la información de tu ganado. Mantén un registro detallado y actualizado de cada animal, incluyendo historial médico y características.</p>
+                        <a href="mis_animales.html">Ir a Ganado</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-specialists">
+                        <i class="fas fa-tools"></i> Especialistas
+                    </div>
+                    <div class="description-content">
+                        <p>Encuentra y contacta especialistas para tu ganado. Asegúrate de que tu ganado reciba la mejor atención posible con la ayuda de profesionales calificados.</p>
+                        <a href="tecnicos.html">Ir a Especialistas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-veterinarians">
+                        <i class="fas fa-user-md"></i> Veterinarios
+                    </div>
+                    <div class="description-content">
+                        <p>Consulta nuestra lista de tiendas veterinarias en la localidad. Encuentra los productos y servicios que necesitas para el cuidado de tu ganado.</p>
+                        <a href="veterinarios.html">Ir a Veterinarios</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-diseases">
+                        <i class="fas fa-viruses"></i> Salud
+                    </div>
+                    <div class="description-content">
+                        <p>Accede a una lista de medicamentos y enfermedades para el ganado. Usa la funcionalidad de búsqueda para encontrar información relevante basada en síntomas o medicamentos.</p>
+                        <a href="enfermedades.html">Ir a Salud</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-notes">
+                        <i class="fas fa-sticky-note"></i> Anotaciones
+                    </div>
+                    <div class="description-content">
+                        <p>Realiza y guarda anotaciones importantes sobre la gestión de tu ganado. Mantén un registro organizado de tus observaciones y tareas.</p>
+                        <a href="notas.html">Ir a Anotaciones</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="description-div">
+                    <div class="description-header" id="desc-agriculture">
+                        <i class="fas fa-tractor"></i> Agricultura
+                    </div>
+                    <div class="description-content">
+                        <p>Administra tus actividades agrícolas relacionadas con el ganado. Mantén un registro detallado de las actividades agrícolas que impactan tu operación ganadera.</p>
+                        <a href="ganaderia.html">Ir a Agricultura</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2024 GanaderoPro. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Script to toggle details sections
+        document.querySelectorAll('.description-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
+            });
+        });
+
+        // Initialize all descriptions to be open by default
+        document.querySelectorAll('.description-content').forEach(content => {
+            content.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

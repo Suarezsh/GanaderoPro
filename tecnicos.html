@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Especialistas - GanaderoPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        #searchInput {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .card {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card .profile-icon {
+            font-size: 50px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .card h5 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+
+        .card-container .card {
+            flex: 1 1 calc(30% - 20px);
+            max-width: calc(30% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .card-container .card {
+                flex: 1 1 calc(45% - 20px);
+                max-width: calc(45% - 20px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-container .card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="brand">
+            <a id="app-name" href="index.html">GanaderoPro</a>
+        </div>
+        <div id="menu-toggle-btn" class="menu-toggle">
+            <i id="menu-bars-icon" class="fas fa-bars"></i>
+            <i id="menu-times-icon" class="fas fa-times" style="display: none;"></i>
+        </div>
+        <ul id="main-menu" class="menu">
+            <li><a href="index.html" id="menu-item-home"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="dosis.html" id="menu-item-dosis"><i class="fas fa-syringe"></i> Medicación</a></li>
+            <li><a href="mis_animales.html" id="menu-item-animals"><i class="fas fa-paw"></i> Ganado</a></li>
+            <li><a href="tecnicos.html" id="menu-item-specialists"><i class="fas fa-tools"></i> Especialistas</a></li>
+            <li><a href="veterinarios.html" id="menu-item-veterinarians"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+            <li><a href="enfermedades.html" id="menu-item-diseases"><i class="fas fa-viruses"></i> Salud</a></li>
+            <li><a href="notas.html" id="menu-item-notes"><i class="fas fa-sticky-note"></i> Anotaciones</a></li>
+            <li><a href="ganaderia.html" id="menu-item-agriculture"><i class="fas fa-tractor"></i> Agricultura</a></li>
+        </ul>
+        <div id="overlay" class="overlay"></div>
+    </nav>
+
+    <div class="container">
+        <h2>Especialistas</h2>
+        <input type="text" id="searchInput" placeholder="Buscar por nombre, especialidad o ubicación...">
+
+        <div class="card-container" id="techniciansContainer">
+            <!-- Tarjetas de técnicos se agregarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        const technicians = [
+            { name: 'Carlos Pérez', specialty: 'Mantenimiento de equipos agrícolas', location: 'Lima' },
+            { name: 'María García', specialty: 'Reparación de maquinaria ganadera', location: 'Cusco' },
+            { name: 'Juan López', specialty: 'Instalación de sistemas de riego', location: 'Arequipa' },
+            { name: 'Lucía Fernández', specialty: 'Consultoría en nutrición animal', location: 'Puno' },
+            { name: 'Ricardo Gómez', specialty: 'Automatización agrícola', location: 'Lima' },
+            { name: 'Ana Torres', specialty: 'Sanidad animal', location: 'Cusco' },
+            { name: 'José Ramírez', specialty: 'Diseño de establos', location: 'Ayacucho' },
+            { name: 'Laura Díaz', specialty: 'Electrificación rural', location: 'Huancayo' },
+            { name: 'Luis Castillo', specialty: 'Gestión de residuos ganaderos', location: 'Cajamarca' },
+            { name: 'Sofía Méndez', specialty: 'Manejo de pastos', location: 'Piura' }
+        ];
+
+        function renderTechnicians() {
+            const container = document.getElementById('techniciansContainer');
+            container.innerHTML = '';
+
+            technicians.forEach(tech => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="profile-icon"><i class="fas fa-user"></i></div>
+                    <h5>${tech.name}</h5>
+                    <p>Especialidad: ${tech.specialty}</p>
+                    <p>Ubicación: ${tech.location}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const filteredTechnicians = technicians.filter(tech => 
+                tech.name.toLowerCase().includes(query) ||
+                tech.specialty.toLowerCase().includes(query) ||
+                tech.location.toLowerCase().includes(query)
+            );
+            renderFilteredTechnicians(filteredTechnicians);
+        });
+
+        function renderFilteredTechnicians(filteredTechnicians) {
+            const container = document.getElementById('techniciansContainer');
+            container.innerHTML = '';
+
+            filteredTechnicians.forEach(tech => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="profile-icon"><i class="fas fa-user"></i></div>
+                    <h5>${tech.name}</h5>
+                    <p>Especialidad: ${tech.specialty}</p>
+                    <p>Ubicación: ${tech.location}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        renderTechnicians();
+    </script>
+    <script src="menu.js"></script>
+</body>
+</html>

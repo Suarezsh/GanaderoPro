@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Enfermedades - GanaderoPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .btn-floating:hover {
+            background-color: #0056b3;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-body input, .modal-body select, .modal-body textarea {
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .table-container input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .table-container table {
+            width: 100%;
+        }
+
+        .table-container th, .table-container td {
+            text-align: center;
+        }
+
+        .table-container th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .actions i {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .description {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="brand">
+            <a id="app-name" href="index.html">GanaderoPro</a>
+        </div>
+        <div id="menu-toggle-btn" class="menu-toggle">
+            <i id="menu-bars-icon" class="fas fa-bars"></i>
+            <i id="menu-times-icon" class="fas fa-times" style="display: none;"></i>
+        </div>
+        <ul id="main-menu" class="menu">
+            <li><a href="index.html" id="menu-item-home"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="dosis.html" id="menu-item-dosis"><i class="fas fa-syringe"></i> Medicación</a></li>
+            <li><a href="mis_animales.html" id="menu-item-animals"><i class="fas fa-paw"></i> Ganado</a></li>
+            <li><a href="tecnicos.html" id="menu-item-specialists"><i class="fas fa-tools"></i> Especialistas</a></li>
+            <li><a href="veterinarios.html" id="menu-item-veterinarians"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+            <li><a href="enfermedades.html" id="menu-item-diseases"><i class="fas fa-viruses"></i> Salud</a></li>
+            <li><a href="notas.html" id="menu-item-notes"><i class="fas fa-sticky-note"></i> Anotaciones</a></li>
+            <li><a href="ganaderia.html" id="menu-item-agriculture"><i class="fas fa-tractor"></i> Agricultura</a></li>
+        </ul>
+        <div id="overlay" class="overlay"></div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Enfermedades</h2>
+        <div class="table-container">
+            <input type="text" id="searchInput" placeholder="Buscar enfermedad por nombre o síntomas...">
+            <table id="enfermedadesTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Síntomas</th>
+                        <th>Tratamiento</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody id="enfermedadesTableBody">
+                    <!-- Filas de enfermedades se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Modal para agregar enfermedad -->
+        <div class="modal fade" id="addEnfermedadModal" tabindex="-1" role="dialog" aria-labelledby="addEnfermedadModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEnfermedadModalLabel">Agregar Nueva Enfermedad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="enfermedadForm">
+                            <div class="form-group">
+                                <label for="enfermedadNombre">Nombre</label>
+                                <input type="text" class="form-control" id="enfermedadNombre" placeholder="Nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enfermedadSintomas">Síntomas</label>
+                                <input type="text" class="form-control" id="enfermedadSintomas" placeholder="Síntomas" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enfermedadTratamiento">Tratamiento</label>
+                                <input type="text" class="form-control" id="enfermedadTratamiento" placeholder="Tratamiento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enfermedadDescripcion">Descripción</label>
+                                <textarea class="form-control" id="enfermedadDescripcion" rows="3" placeholder="Descripción" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="saveEnfermedadBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar enfermedad -->
+        <div class="modal fade" id="editEnfermedadModal" tabindex="-1" role="dialog" aria-labelledby="editEnfermedadModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEnfermedadModalLabel">Editar Enfermedad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editEnfermedadForm">
+                            <div class="form-group">
+                                <label for="editEnfermedadNombre">Nombre</label>
+                                <input type="text" class="form-control" id="editEnfermedadNombre" placeholder="Nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEnfermedadSintomas">Síntomas</label>
+                                <input type="text" class="form-control" id="editEnfermedadSintomas" placeholder="Síntomas" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEnfermedadTratamiento">Tratamiento</label>
+                                <input type="text" class="form-control" id="editEnfermedadTratamiento" placeholder="Tratamiento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEnfermedadDescripcion">Descripción</label>
+                                <textarea class="form-control" id="editEnfermedadDescripcion" rows="3" placeholder="Descripción" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="updateEnfermedadBtn">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const enfermedades = [
+    {
+        nombre: "Fiebre Aftosa",
+        sintomas: "Fiebre, úlceras en la boca, cojera",
+        tratamiento: "Vacunación, aislamiento",
+        descripcion: "Enfermedad viral contagiosa que afecta a los animales de pezuña hendida."
+    },
+    {
+        nombre: "Brucelosis",
+        sintomas: "Fiebre intermitente, abortos",
+        tratamiento: "Antibióticos, manejo de la reproducción",
+        descripcion: "Enfermedad bacteriana que afecta a los bovinos y otros animales."
+    },
+    {
+        nombre: "Leptospirosis",
+        sintomas: "Fiebre, ictericia, debilidad",
+        tratamiento: "Antibióticos, hidratación",
+        descripcion: "Enfermedad bacteriana transmitida por contacto con agua contaminada."
+    },
+    {
+        nombre: "Tuberculosis Bovina",
+        sintomas: "Pérdida de peso, tos, dificultad para respirar",
+        tratamiento: "Antibióticos específicos, manejo de animales infectados",
+        descripcion: "Enfermedad bacteriana crónica que afecta los pulmones de los bovinos."
+    },
+    {
+        nombre: "Parvovirus Canino",
+        sintomas: "Vómitos, diarrea severa, deshidratación",
+        tratamiento: "Soporte clínico, hidratación, medicamentos antivirales",
+        descripcion: "Enfermedad viral grave en perros que afecta el sistema digestivo."
+    },
+    {
+        nombre: "Enfermedad de Newcastle",
+        sintomas: "Dificultad para respirar, diarrea, parálisis",
+        tratamiento: "Vacunación, manejo de brotes",
+        descripcion: "Enfermedad viral que afecta a las aves, especialmente a las gallinas."
+    },
+    {
+        nombre: "Brucelosis Caprina",
+        sintomas: "Abortos, artritis, mastitis",
+        tratamiento: "Antibióticos, manejo sanitario",
+        descripcion: "Enfermedad bacteriana que afecta a las cabras y otras especies."
+    },
+    {
+        nombre: "Coccidiosis",
+        sintomas: "Diarrea con sangre, debilidad, deshidratación",
+        tratamiento: "Antiparasitarios, hidratación",
+        descripcion: "Enfermedad parasitaria que afecta a los animales jóvenes, especialmente aves y bovinos."
+    },
+    {
+        nombre: "Fiebre Q",
+        sintomas: "Fiebre, dolor muscular, dolor de cabeza",
+        tratamiento: "Antibióticos, manejo de infecciones",
+        descripcion: "Enfermedad bacteriana zoonótica que puede afectar a humanos y animales."
+    },
+    {
+        nombre: "Tétanos",
+        sintomas: "Espasmos musculares, rigidez, dificultad para moverse",
+        tratamiento: "Antitoxina tetánica, soporte clínico",
+        descripcion: "Enfermedad grave causada por una toxina bacteriana que afecta el sistema nervioso."
+    }
+];
+
+
+        const enfermedadesTableBody = document.getElementById('enfermedadesTableBody');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderTable(data) {
+            enfermedadesTableBody.innerHTML = data.map(enfermedad => `
+                <tr>
+                    <td>${enfermedad.nombre}</td>
+                    <td>${enfermedad.sintomas}</td>
+                    <td>${enfermedad.tratamiento}</td>
+                    <td>${enfermedad.descripcion}</td>
+                </tr>
+            `).join('');
+        }
+
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase();
+            const filteredData = enfermedades.filter(enfermedad => 
+                enfermedad.nombre.toLowerCase().includes(searchText) ||
+                enfermedad.sintomas.toLowerCase().includes(searchText)
+            );
+            renderTable(filteredData);
+        });
+
+        document.getElementById('saveEnfermedadBtn').addEventListener('click', () => {
+            const form = document.getElementById('enfermedadForm');
+            const newEnfermedad = {
+                nombre: form.enfermedadNombre.value,
+                sintomas: form.enfermedadSintomas.value,
+                tratamiento: form.enfermedadTratamiento.value,
+                descripcion: form.enfermedadDescripcion.value
+            };
+            enfermedades.push(newEnfermedad);
+            form.reset();
+            $('#addEnfermedadModal').modal('hide');
+            renderTable(enfermedades);
+        });
+
+        document.getElementById('updateEnfermedadBtn').addEventListener('click', () => {
+            // Lógica para actualizar la enfermedad seleccionada
+            $('#editEnfermedadModal').modal('hide');
+            renderTable(enfermedades);
+        });
+
+        renderTable(enfermedades);
+    </script>
+    <script src="menu.js"></script>
+</body>
+</html>

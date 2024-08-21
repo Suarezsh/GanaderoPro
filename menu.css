@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
+}
+
+#app-name {
+    color: #4CAF50;
+    border-bottom: solid 1px #4CAF50;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2C3E50;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 1001;
+}
+
+.navbar a {
+    color: #ECF0F1;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar .menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .menu li {
+    margin: 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar .menu li a {
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.navbar .menu li a i {
+    color: #E74C3C;
+    margin-right: 8px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .menu li a:hover {
+    color: #4CAF50;
+}
+
+.navbar .menu li a:hover i {
+    color: #ECF0F1;
+    transform: rotate(360deg);
+}
+
+.navbar .menu li a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -5px;
+    left: 0;
+    background-color: #4CAF50;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar .menu li a:hover::before {
+    visibility: visible;
+    width: 100%;
+}
+
+.navbar .menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.navbar .menu-toggle i {
+    color: #ECF0F1;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .menu-toggle i:hover {
+    color: #4CAF50;
+}
+
+.navbar .menu-toggle.open {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .navbar .menu {
+        flex-direction: column;
+        width: 250px;
+        height: calc(100% - 60px);
+        background-color: #2C3E50;
+        position: fixed;
+        top: 56px;
+        left: -250px;
+        transition: left 0.3s ease, transform 0.3s ease;
+        z-index: 1000;
+        transform: translateX(-100%);
+    }
+
+    .navbar .menu.show {
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .navbar .menu li {
+        text-align: center;
+        width: 100%;
+        margin: 0;
+        padding: 1rem 0;
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar .menu li a:hover {
+        background-color: #4CAF50;
+        color: #ECF0F1;
+    }
+
+    .navbar .menu-toggle {
+        display: block;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+        z-index: 999;
+    }
+
+    .overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.content {
+    transition: filter 0.3s ease;
+    padding-top: 60px;
+}

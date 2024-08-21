@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Medicaciones - GanaderoPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .btn-floating:hover {
+            background-color: #0056b3;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-body input, .modal-body select {
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .table-container input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .table-container table {
+            width: 100%;
+        }
+
+        .table-container th, .table-container td {
+            text-align: center;
+        }
+
+        .table-container th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .days-left {
+            font-weight: bold;
+        }
+
+        .days-left.red {
+            color: red;
+        }
+
+        .days-left.yellow {
+            color: orange;
+        }
+
+        .days-left.green {
+            color: green;
+        }
+
+        .actions i {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <div class="brand">
+            <a id="app-name" href="index.html">GanaderoPro</a>
+        </div>
+        <div id="menu-toggle-btn" class="menu-toggle">
+            <i id="menu-bars-icon" class="fas fa-bars"></i>
+            <i id="menu-times-icon" class="fas fa-times" style="display: none;"></i>
+        </div>
+        <ul id="main-menu" class="menu">
+            <li><a href="index.html" id="menu-item-home"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="dosis.html" id="menu-item-dosis"><i class="fas fa-syringe"></i> Medicación</a></li>
+            <li><a href="mis_animales.html" id="menu-item-animals"><i class="fas fa-paw"></i> Ganado</a></li>
+            <li><a href="tecnicos.html" id="menu-item-specialists"><i class="fas fa-tools"></i> Especialistas</a></li>
+            <li><a href="veterinarios.html" id="menu-item-veterinarians"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+            <li><a href="enfermedades.html" id="menu-item-diseases"><i class="fas fa-viruses"></i> Salud</a></li>
+            <li><a href="notas.html" id="menu-item-notes"><i class="fas fa-sticky-note"></i> Anotaciones</a></li>
+            <li><a href="ganaderia.html" id="menu-item-agriculture"><i class="fas fa-tractor"></i> Agricultura</a></li>
+        </ul>
+        <div id="overlay" class="overlay"></div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Gestión de Medicaciones</h2>
+        <button class="btn-floating" data-toggle="modal" data-target="#addDosisModal">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <!-- Modal para agregar dosis -->
+        <div class="modal fade" id="addDosisModal" tabindex="-1" role="dialog" aria-labelledby="addDosisModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDosisModalLabel">Agregar Nueva Dosis</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dosisForm">
+                            <div class="form-group">
+                                <label for="dosisGanado">Ganado</label>
+                                <select class="form-control" id="dosisGanado" required>
+                                    <!-- Opciones de ganado se agregan dinámicamente -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisCodigo">Código del Ganado</label>
+                                <input type="text" class="form-control" id="dosisCodigo" placeholder="Código del Ganado" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisProducto">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="dosisProducto" placeholder="Nombre del Producto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisDescripcion">Descripción</label>
+                                <textarea class="form-control" id="dosisDescripcion" placeholder="Descripción" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisFecha">Fecha</label>
+                                <input type="date" class="form-control" id="dosisFecha" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisProximaFecha">Fecha de Próxima Dosis</label>
+                                <input type="date" class="form-control" id="dosisProximaFecha" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dosisObservaciones">Observaciones</label>
+                                <textarea class="form-control" id="dosisObservaciones" placeholder="Observaciones" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="saveDosisBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <input type="text" id="searchInput" placeholder="Buscar dosis por nombre del producto o ganado...">
+            <table id="dosisTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Ganado</th>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Próxima Dosis</th>
+                        <th>Días Restantes</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="dosisTableBody">
+                    <!-- Filas de dosis se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let ganadoList = JSON.parse(localStorage.getItem('ganadoList')) || [];
+            let dosisList = JSON.parse(localStorage.getItem('dosisList')) || [];
+
+            // Cargar los nombres de ganado en el select
+            ganadoList.forEach(ganado => {
+                $("#dosisGanado").append(`<option value="${ganado.codigo}">${ganado.nombre}</option>`);
+            });
+
+            // Actualizar el código del ganado al seleccionar un ganado
+            $("#dosisGanado").change(function() {
+                const selectedCode = $(this).val();
+                const selectedGanado = ganadoList.find(g => g.codigo === selectedCode);
+                $("#dosisCodigo").val(selectedGanado.codigo);
+            });
+
+            // Guardar nueva dosis
+            $("#saveDosisBtn").click(function() {
+                const dosis = {
+                    ganado: $("#dosisGanado option:selected").text(),
+                    codigo: $("#dosisCodigo").val(),
+                    producto: $("#dosisProducto").val(),
+                    descripcion: $("#dosisDescripcion").val(),
+                    fecha: $("#dosisFecha").val(),
+                    proxima: $("#dosisProximaFecha").val(),
+                    observaciones: $("#dosisObservaciones").val()
+                };
+
+                dosisList.push(dosis);
+                localStorage.setItem('dosisList', JSON.stringify(dosisList));
+                $("#addDosisModal").modal('hide');
+                renderTable();
+            });
+
+            // Renderizar la tabla de dosis
+            function renderTable() {
+                $("#dosisTableBody").empty();
+                dosisList.forEach((dosis, index) => {
+                    const daysRemaining = calculateDaysRemaining(dosis.proxima);
+                    const daysClass = getDaysClass(daysRemaining);
+
+                    $("#dosisTableBody").append(`
+                        <tr>
+                            <td>${dosis.ganado}</td>
+                            <td>${dosis.codigo}</td>
+                            <td>${dosis.producto}</td>
+                            <td>${dosis.descripcion}</td>
+                            <td>${dosis.fecha}</td>
+                            <td>${dosis.proxima}</td>
+                            <td class="days-left ${daysClass}">${daysRemaining}</td>
+                            <td>${dosis.observaciones}</td>
+                            <td class="actions">
+                                <i class="fas fa-trash delete-btn" data-index="${index}"></i>
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                $(".delete-btn").click(function() {
+                    const index = $(this).data('index');
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, eliminarlo',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            dosisList.splice(index, 1);
+                            localStorage.setItem('dosisList', JSON.stringify(dosisList));
+                            renderTable();
+                        }
+                    });
+                });
+            }
+
+            // Calcular días restantes hasta la próxima dosis
+            function calculateDaysRemaining(proximaFecha) {
+                const today = new Date();
+                const proxima = new Date(proximaFecha);
+                const diffTime = Math.max(proxima - today, 0);
+                return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            }
+
+            // Obtener la clase CSS para el color según los días restantes
+            function getDaysClass(daysRemaining) {
+                if (daysRemaining < 5) {
+                    return "red";
+                } else if (daysRemaining >= 5 && daysRemaining <= 10) {
+                    return "yellow";
+                } else {
+                    return "green";
+                }
+            }
+
+            // Filtrar tabla
+            $("#searchInput").on("keyup", function() {
+                const value = $(this).val().toLowerCase();
+                $("#dosisTableBody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            renderTable();
+        });
+    </script>
+    <script src="menu.js"></script>
+</body>
+</html>
